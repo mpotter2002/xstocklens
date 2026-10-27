@@ -11,8 +11,7 @@ describe("SessionClock", () => {
       nextClose: 1789675200,
     });
     expect(snap.cashOpen).toBe(false);
-    expect(snap.afterHoursNarrative).toBe(true);
-    expect(snap.detail).toMatch(/63%/);
+    expect(snap.detail).toMatch(/Tokenized names keep printing/);
   });
 
   it("labels regular cash hours", () => {

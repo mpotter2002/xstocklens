@@ -173,11 +173,12 @@ export class BoardComposer {
       }),
     ]);
 
+    const redemptionPrice = feeds.redemption ? this.priceFor(feeds.redemption, hermesPrices) : null;
     const redemptionRate = feeds.redemption
       ? {
           symbol: feeds.redemption.symbol,
-          value: this.priceFor(feeds.redemption, hermesPrices)?.priceUsd ?? (await this.terminalPrice(feeds.redemption.symbol)),
-          source: (this.priceFor(feeds.redemption, hermesPrices) ? "hermes" : "pyth-terminal") as PriceSource,
+          value: redemptionPrice?.priceUsd ?? (await this.terminalPrice(feeds.redemption.symbol)),
+          source: (redemptionPrice ? "hermes" : "pyth-terminal") as PriceSource,
           note: "xStock redemption rate vs cash. ~1.00 means the wrapper still claims one share.",
         }
       : null;
