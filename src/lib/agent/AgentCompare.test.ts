@@ -13,9 +13,8 @@ const OPEN: SessionSnapshot = {
   nextClose: null,
   label: "US cash open",
   detail: "Regular session.",
-  afterHoursNarrative: false,
 };
-const CLOSED: SessionSnapshot = { ...OPEN, name: "after-hours", cashOpen: false, label: "After hours", afterHoursNarrative: true };
+const CLOSED: SessionSnapshot = { ...OPEN, name: "after-hours", cashOpen: false, label: "After hours" };
 
 function mark(kind: BoardMark["kind"], partial: Partial<BoardMark> = {}): BoardMark {
   return {

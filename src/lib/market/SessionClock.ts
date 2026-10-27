@@ -10,7 +10,6 @@ export class SessionClock {
     const weekend = weekday === 0 || weekday === 6;
     const name = this.sessionName(weekend, minutes);
     const cashOpen = name === "regular";
-    const afterHoursNarrative = !cashOpen;
 
     return {
       name,
@@ -18,7 +17,6 @@ export class SessionClock {
       nextClose: pyth?.nextClose ?? null,
       label: this.label(name),
       detail: this.detail(name, pyth?.nextOpen ?? null),
-      afterHoursNarrative,
     };
   }
 
@@ -60,7 +58,7 @@ export class SessionClock {
     if (name === "regular") {
       return "NYSE/Nasdaq regular session · 09:30–16:00 ET. Wrappers still trade around the cash print.";
     }
-    return `US listed cash is shut. Tokenized names keep printing — ~63% of xStocks volume historically hits while NYSE is closed. ${openHint}`;
+    return `US listed cash is shut. Tokenized names keep printing. ${openHint}`;
   }
 
   static nyParts(now: Date): { weekday: number; hour: number; minute: number } {

@@ -140,11 +140,11 @@ describe("BoardView", () => {
 
   it("keeps last-cash-print context honest when the session is shut", () => {
     const printed = board({
-      session: { ...BoardComposer.unavailable("AAPL").session, cashOpen: false, afterHoursNarrative: true },
+      session: { ...BoardComposer.unavailable("AAPL").session, cashOpen: false },
       equity: mark({ kind: "equity", priceUsd: 190.12 }),
     });
     const empty = board({
-      session: { ...BoardComposer.unavailable("AAPL").session, cashOpen: false, afterHoursNarrative: true },
+      session: { ...BoardComposer.unavailable("AAPL").session, cashOpen: false },
       equity: mark({ kind: "equity", priceUsd: null }),
     });
     expect(BoardView.cashPrintContext(printed)).toMatch(/last print/i);
@@ -177,14 +177,13 @@ describe("BoardView", () => {
   it("only adds a cash-close hint while the session is open, so after-hours copy is not repeated", () => {
     const base = BoardComposer.unavailable("AAPL").session;
     const closed = board({
-      session: { ...base, cashOpen: false, afterHoursNarrative: true },
+      session: { ...base, cashOpen: false },
     });
     expect(BoardView.nextSessionHint(closed)).toBeNull();
     const open = board({
       session: {
         ...base,
         cashOpen: true,
-        afterHoursNarrative: false,
         nextClose: 1_800_000_000,
         detail: "NYSE/Nasdaq regular session · 09:30–16:00 ET.",
       },
