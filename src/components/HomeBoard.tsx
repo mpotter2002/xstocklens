@@ -12,7 +12,7 @@ import type { DemoHostInfo, SessionSnapshot } from "@/lib/types";
 export function HomeBoard({ host, session }: { host: DemoHostInfo; session: SessionSnapshot }) {
   return (
     <div className="min-h-screen">
-      <AppChrome host={host} sessionLabel={session.label} sessionClosed={session.afterHoursNarrative} />
+      <AppChrome host={host} sessionLabel={session.label} sessionClosed={!session.cashOpen} />
       <main className="mx-auto max-w-7xl px-4 py-6 sm:px-6">
         <Suspense fallback={<MarketStripSkeleton />}>
           <MarketStripSection session={session} />

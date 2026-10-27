@@ -109,7 +109,7 @@ export function PriceBoard({ ticker }: { ticker: string }) {
 
   return (
     <div className="min-h-screen">
-      <AppChrome host={board.host} sessionLabel={board.session.label} sessionClosed={board.session.afterHoursNarrative} />
+      <AppChrome host={board.host} sessionLabel={board.session.label} sessionClosed={!board.session.cashOpen} />
       <div className="mx-auto max-w-7xl space-y-5 overflow-x-hidden px-4 py-5 sm:px-6">
         <TickerDesk active={active} onSelect={selectTicker} />
         <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(18rem,21rem)]">

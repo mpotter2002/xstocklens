@@ -37,7 +37,7 @@ export class RouteBoard {
       featured,
       cheapest,
       raydiumIsCheapest,
-      honesty: this.honesty({ mint: params.mint, quotes: params.quotes, featured, cheapest, raydium, raydiumIsCheapest }),
+      honesty: this.honesty({ mint: params.mint, quotes: params.quotes, cheapest, raydium }),
     };
   }
 
@@ -52,10 +52,8 @@ export class RouteBoard {
   static honesty(params: {
     mint: string | null;
     quotes: SwapQuote[];
-    featured: SwapQuote | null;
     cheapest: SwapQuote | null;
     raydium: SwapQuote | null;
-    raydiumIsCheapest: boolean | null;
   }): string {
     if (!params.mint) {
       return "No Solana mint resolved — no swap route to quote.";

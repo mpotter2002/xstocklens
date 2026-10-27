@@ -75,7 +75,6 @@ export type SessionSnapshot = {
   nextClose: number | null;
   label: string;
   detail: string;
-  afterHoursNarrative: boolean;
 };
 
 export type BoardPayload = {
