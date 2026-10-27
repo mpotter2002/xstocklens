@@ -33,7 +33,6 @@ export const metadata: Metadata = {
     "Live premium/discount board for tokenized stocks. Equity vs xStock vs Ondo, with an honest cheapest-venue CTA when quotes compare.",
   icons: {
     icon: [
-      { url: "/brand/icon-dark.png", type: "image/png" },
       { url: "/brand/icon-light.png", type: "image/png", media: "(prefers-color-scheme: light)" },
       { url: "/brand/icon-dark.png", type: "image/png", media: "(prefers-color-scheme: dark)" },
     ],
