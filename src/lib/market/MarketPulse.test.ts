@@ -2,8 +2,8 @@ import { describe, expect, it } from "vitest";
 import { MarketPulse } from "@/lib/market/MarketPulse";
 import type { TerminalQuote } from "@/lib/pyth/PythTerminalClient";
 
-function q(symbol: string, priceUsd: number, changePct24h: number | null = null): TerminalQuote {
-  return { symbol, priceUsd, changePct24h };
+function q(symbol: string, priceUsd: number): TerminalQuote {
+  return { symbol, priceUsd };
 }
 
 describe("MarketPulse.symbols", () => {
@@ -14,9 +14,8 @@ describe("MarketPulse.symbols", () => {
 
 describe("MarketPulse.row", () => {
   it("computes the xStock gap vs cash from real prints", () => {
-    const row = MarketPulse.row("SPY", "S&P 500", q("Equity.US.SPY/USD", 773.61, -0.03), q("Crypto.SPYX/USD", 777.96, 0.4));
+    const row = MarketPulse.row("SPY", "S&P 500", q("Equity.US.SPY/USD", 773.61), q("Crypto.SPYX/USD", 777.96));
     expect(row.cash?.priceUsd).toBe(773.61);
-    expect(row.cash?.changePct24h).toBe(-0.03);
     expect(row.xstock?.priceUsd).toBe(777.96);
     expect(row.gapBps).toBeCloseTo(56.23, 1);
     expect(row.sign).toBe("premium");
@@ -84,9 +83,9 @@ describe("MarketPulse.load", () => {
   it("quotes both legs for every ticker through the injected client", async () => {
     const seen: string[] = [];
     const prices: Record<string, TerminalQuote> = {
-      "Equity.US.SPY/USD": q("Equity.US.SPY/USD", 700, 0.5),
-      "Crypto.SPYX/USD": q("Crypto.SPYX/USD", 701, 0.6),
-      "Equity.US.QQQ/USD": q("Equity.US.QQQ/USD", 600, -1),
+      "Equity.US.SPY/USD": q("Equity.US.SPY/USD", 700),
+      "Crypto.SPYX/USD": q("Crypto.SPYX/USD", 701),
+      "Equity.US.QQQ/USD": q("Equity.US.QQQ/USD", 600),
     };
     const pulse = await MarketPulse.load({
       tickers: [

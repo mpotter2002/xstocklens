@@ -8,10 +8,7 @@ export class RouteBoard {
     if (venue === "jupiter") {
       return "Jupiter";
     }
-    if (venue === "meteora") {
-      return "Meteora";
-    }
-    return "dFlow";
+    return "Meteora";
   }
 
   static card(params: {

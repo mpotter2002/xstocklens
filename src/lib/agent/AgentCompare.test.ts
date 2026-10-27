@@ -10,14 +10,12 @@ const NOW_S = NOW_MS / 1000;
 const OPEN: SessionSnapshot = {
   name: "regular",
   cashOpen: true,
-  pythEquityOpen: true,
-  nextOpen: null,
   nextClose: null,
   label: "US cash open",
   detail: "Regular session.",
   afterHoursNarrative: false,
 };
-const CLOSED: SessionSnapshot = { ...OPEN, name: "after-hours", cashOpen: false, pythEquityOpen: false, label: "After hours", afterHoursNarrative: true };
+const CLOSED: SessionSnapshot = { ...OPEN, name: "after-hours", cashOpen: false, label: "After hours", afterHoursNarrative: true };
 
 function mark(kind: BoardMark["kind"], partial: Partial<BoardMark> = {}): BoardMark {
   return {
@@ -26,13 +24,11 @@ function mark(kind: BoardMark["kind"], partial: Partial<BoardMark> = {}): BoardM
     issuer: kind === "equity" ? "US listed equity" : kind === "xstock" ? "Backed / xStocks" : "Ondo Global Markets",
     symbol: kind === "equity" ? "Equity.US.AAPL/USD" : kind === "xstock" ? "Crypto.AAPLX/USD" : "Crypto.AAPLON/USD",
     displaySymbol: null,
-    description: null,
     feedId: `0x${kind}`,
     priceUsd: null,
     confidenceUsd: null,
     publishTime: null,
     source: "unavailable",
-    live: false,
     note: null,
     ...partial,
   };
@@ -41,14 +37,7 @@ function mark(kind: BoardMark["kind"], partial: Partial<BoardMark> = {}): BoardM
 function quote(partial: Partial<SwapQuote> & Pick<SwapQuote, "venue" | "available">): SwapQuote {
   return {
     reason: null,
-    inMint: "usdc",
     outMint: "x-mint",
-    inAmountAtomic: "100000000",
-    outAmountAtomic: partial.available ? "1" : null,
-    inDecimals: 6,
-    outDecimals: 8,
-    inUsd: 100,
-    outShares: partial.available ? 0.3 : null,
     effectiveUsdPerShare: null,
     priceImpactPct: partial.available ? 0.02 : null,
     hopLabels: [],
@@ -60,8 +49,8 @@ function quote(partial: Partial<SwapQuote> & Pick<SwapQuote, "venue" | "availabl
 
 /** A full AAPL board: Hermes-timestamped marks, xStock quoted on two venues, Ondo mint unresolved. */
 function fullBoard(overrides: Partial<BoardPayload> = {}): BoardPayload {
-  const equity = mark("equity", { priceUsd: 300, publishTime: NOW_S - 10, source: "hermes", live: true });
-  const xstock = mark("xstock", { priceUsd: 303, publishTime: NOW_S - 5, source: "hermes", live: true });
+  const equity = mark("equity", { priceUsd: 300, publishTime: NOW_S - 10, source: "hermes" });
+  const xstock = mark("xstock", { priceUsd: 303, publishTime: NOW_S - 5, source: "hermes" });
   const ondo = mark("ondo", { note: "Pyth does not list this feed." });
   const routes = [
     RouteBoard.card({
@@ -206,7 +195,7 @@ describe("AgentCompare.fromBoard", () => {
 
   it("returns status partial when wrappers print but there is no cash mark to compare against", () => {
     const board = fullBoard();
-    board.equity = { ...board.equity, priceUsd: null, publishTime: null, source: "unavailable", live: false, note: "Feed exists but no public price tick landed." };
+    board.equity = { ...board.equity, priceUsd: null, publishTime: null, source: "unavailable", note: "Feed exists but no public price tick landed." };
     board.wrappers = board.wrappers.map((w: BoardPayload["wrappers"][number]) => ({ ...w, peg: { bps: null, pct: null, dollars: null, sign: "unavailable" as const } }));
     const out = AgentCompare.fromBoard(board, NOW_MS);
     expect(out.status).toBe("partial");

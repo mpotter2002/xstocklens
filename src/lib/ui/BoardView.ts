@@ -40,19 +40,6 @@ export class BoardView {
     return mark.source === "unavailable" ? "unavailable" : mark.source;
   }
 
-  static printAge(mark: BoardMark): string {
-    if (mark.priceUsd === null) {
-      return "No print";
-    }
-    if (mark.publishTime) {
-      return `${mark.symbol} · ${Format.relative(mark.publishTime)}`;
-    }
-    if (mark.source === "pyth-terminal") {
-      return `${mark.symbol} · terminal snapshot`;
-    }
-    return mark.symbol;
-  }
-
   static heroCaption(mark: BoardMark): string {
     if (mark.priceUsd === null) {
       return "No cash print";

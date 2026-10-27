@@ -10,14 +10,11 @@ export class SessionClock {
     const weekend = weekday === 0 || weekday === 6;
     const name = this.sessionName(weekend, minutes);
     const cashOpen = name === "regular";
-    const pythEquityOpen = pyth ? pyth.isOpen : null;
     const afterHoursNarrative = !cashOpen;
 
     return {
       name,
       cashOpen,
-      pythEquityOpen,
-      nextOpen: pyth?.nextOpen ?? null,
       nextClose: pyth?.nextClose ?? null,
       label: this.label(name),
       detail: this.detail(name, pyth?.nextOpen ?? null),
