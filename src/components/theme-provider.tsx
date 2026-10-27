@@ -11,13 +11,11 @@ import {
 } from "react";
 import {
   ThemePreference,
-  type ResolvedTheme,
   type ThemeChoice,
 } from "@/lib/ui/ThemePreference";
 
 type ThemeContextValue = {
   choice: ThemeChoice;
-  resolved: ResolvedTheme;
   setChoice: (choice: ThemeChoice) => void;
 };
 
@@ -33,14 +31,12 @@ export function useTheme(): ThemeContextValue {
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [choice, setChoiceState] = useState<ThemeChoice>(ThemePreference.DEFAULT);
-  const [resolved, setResolved] = useState<ResolvedTheme>("light");
 
   const apply = useCallback((next: ThemeChoice) => {
     const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
     const nextResolved = ThemePreference.resolved(next, prefersDark);
     ThemePreference.apply(nextResolved, document.documentElement);
     setChoiceState(next);
-    setResolved(nextResolved);
   }, []);
 
   useLayoutEffect(() => {
@@ -60,8 +56,8 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   );
 
   const value = useMemo(
-    () => ({ choice, resolved, setChoice }),
-    [choice, resolved, setChoice],
+    () => ({ choice, setChoice }),
+    [choice, setChoice],
   );
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;

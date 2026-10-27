@@ -19,7 +19,6 @@ export function BrandWordmark({ className }: { className?: string }) {
         sizes="(min-width: 640px) 7rem, 6.5rem"
         className="hidden object-contain object-left mix-blend-screen dark:block"
         aria-hidden="true"
-        priority
       />
     </span>
   );
