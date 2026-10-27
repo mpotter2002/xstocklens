@@ -115,8 +115,6 @@ const BASE_NOTES = [
 ];
 
 export class AgentCompare {
-  static readonly STALE_AFTER_SECONDS = STALE_AFTER_SECONDS;
-
   static parseTicker(raw: unknown): { ok: true; ticker: string } | { ok: false; error: string } {
     if (typeof raw !== "string") {
       return { ok: false, error: "ticker must be a string of 1-6 letters, e.g. \"AAPL\"." };

@@ -4,7 +4,6 @@ import { TtlCache } from "@/lib/cache/TtlCache";
 export type TerminalQuote = {
   symbol: string;
   priceUsd: number;
-  changePct24h: number | null;
 };
 
 export class PythTerminalClient {
@@ -29,10 +28,9 @@ export class PythTerminalClient {
   }
 
   static parse(symbol: string, html: string): TerminalQuote | null {
-    // Terminal ships its data inside an RSC payload, so keys may be backslash-escaped (\"changePct24h\":).
+    // Terminal ships its data inside an RSC payload, so keys may be backslash-escaped (\"latestPrice\":).
     const latest = html.match(/\\?"latestPrice\\?":([0-9]+(?:\.[0-9]+)?)/);
     const meta = html.match(/trading at ([0-9]+(?:\.[0-9]+)?)/i);
-    const change = html.match(/\\?"changePct24h\\?":(-?[0-9]+(?:\.[0-9]+)?(?:e-?[0-9]+)?)/i);
     const priceRaw = latest?.[1] ?? meta?.[1];
     if (!priceRaw) {
       return null;
@@ -44,7 +42,6 @@ export class PythTerminalClient {
     return {
       symbol,
       priceUsd,
-      changePct24h: change ? Number(change[1]) : null,
     };
   }
 }

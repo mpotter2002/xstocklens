@@ -49,10 +49,6 @@ export class McpServer {
     this.compare = deps.compare ?? ((ticker) => AgentCompare.compare(ticker));
   }
 
-  static tools() {
-    return TOOLS;
-  }
-
   /** Handles one JSON-RPC message. Returns null for notifications (no response body). */
   async handle(message: unknown): Promise<JsonRpcResponse | null> {
     if (!this.isRequest(message)) {

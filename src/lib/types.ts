@@ -16,7 +16,7 @@ export type DemoHostInfo = {
   label: string;
 };
 
-export type RouteVenue = "raydium" | "jupiter" | "meteora" | "dflow";
+export type RouteVenue = "raydium" | "jupiter" | "meteora";
 
 export type PegSign = "premium" | "discount" | "flat" | "unavailable";
 
@@ -28,13 +28,11 @@ export type BoardMark = {
   issuer: string;
   symbol: string;
   displaySymbol: string | null;
-  description: string | null;
   feedId: string | null;
   priceUsd: number | null;
   confidenceUsd: number | null;
   publishTime: number | null;
   source: PriceSource;
-  live: boolean;
   note: string | null;
 };
 
@@ -49,14 +47,7 @@ export type SwapQuote = {
   venue: RouteVenue;
   available: boolean;
   reason: string | null;
-  inMint: string;
   outMint: string;
-  inAmountAtomic: string;
-  outAmountAtomic: string | null;
-  inDecimals: number;
-  outDecimals: number;
-  inUsd: number;
-  outShares: number | null;
   effectiveUsdPerShare: number | null;
   priceImpactPct: number | null;
   hopLabels: string[];
@@ -81,8 +72,6 @@ export type WrapperRouteCard = {
 export type SessionSnapshot = {
   name: SessionName;
   cashOpen: boolean;
-  pythEquityOpen: boolean | null;
-  nextOpen: number | null;
   nextClose: number | null;
   label: string;
   detail: string;
@@ -93,7 +82,6 @@ export type BoardPayload = {
   ticker: string;
   name: string;
   fetchedAt: number;
-  demo: boolean;
   pythKeyConfigured: boolean;
   host: DemoHostInfo;
   session: SessionSnapshot;

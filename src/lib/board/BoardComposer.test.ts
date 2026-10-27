@@ -13,7 +13,6 @@ describe("BoardComposer.unavailable", () => {
     expect(board.routes.every((route) => route.featured === null)).toBe(true);
     expect(board.warnings[0]).toMatch(/Venues unreachable/);
     expect(board.equity.displaySymbol).toBeNull();
-    expect(board.equity.description).toBeNull();
     expect(board.routes.every((route) => route.name === null && route.mint === null)).toBe(true);
     expect(BoardComposer.isEmpty(board)).toBe(true);
   });
@@ -93,14 +92,7 @@ describe("BoardComposer.honestRoute", () => {
 function quote(partial: Partial<SwapQuote> & Pick<SwapQuote, "venue" | "available">): SwapQuote {
   return {
     reason: null,
-    inMint: "usdc",
     outMint: "mint",
-    inAmountAtomic: "100000000",
-    outAmountAtomic: partial.available ? "1" : null,
-    inDecimals: 6,
-    outDecimals: 8,
-    inUsd: 100,
-    outShares: partial.available ? 0.3 : null,
     effectiveUsdPerShare: null,
     priceImpactPct: 0.02,
     hopLabels: partial.venue === "raydium" ? ["Raydium"] : ["Jupiter"],
