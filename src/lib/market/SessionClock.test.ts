@@ -12,7 +12,6 @@ describe("SessionClock", () => {
     });
     expect(snap.cashOpen).toBe(false);
     expect(snap.afterHoursNarrative).toBe(true);
-    expect(snap.pythEquityOpen).toBe(false);
     expect(snap.detail).toMatch(/63%/);
   });
 

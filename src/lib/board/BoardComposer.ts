@@ -52,7 +52,6 @@ export class BoardComposer {
       ticker,
       name: ticker,
       fetchedAt: Date.now(),
-      demo: true,
       pythKeyConfigured: Boolean(HermesClient.apiKey()),
       host: DemoHost.snapshot(),
       session,
@@ -116,7 +115,6 @@ export class BoardComposer {
       ticker,
       name: feeds.name,
       fetchedAt: Date.now(),
-      demo: true,
       pythKeyConfigured,
       host: DemoHost.snapshot(),
       session,
@@ -220,13 +218,11 @@ export class BoardComposer {
       issuer,
       symbol: "—",
       displaySymbol: null,
-      description: null,
       feedId: null,
       priceUsd: null,
       confidenceUsd: null,
       publishTime: null,
       source: "unavailable",
-      live: false,
       note,
     };
   }
@@ -249,7 +245,6 @@ export class BoardComposer {
     const identity = {
       symbol: params.feed.symbol,
       displaySymbol: params.feed.displaySymbol || null,
-      description: params.feed.description ? FeedResolver.prettyName(params.feed.description, params.feed.symbol) : null,
       feedId: params.feed.id,
     };
     if (hermes) {
@@ -262,7 +257,6 @@ export class BoardComposer {
         confidenceUsd: hermes.confidenceUsd,
         publishTime: hermes.publishTime,
         source: "hermes",
-        live: true,
         note: null,
       };
     }
@@ -277,7 +271,6 @@ export class BoardComposer {
         confidenceUsd: null,
         publishTime: null,
         source: "pyth-terminal",
-        live: true,
         note: "Pyth Terminal public snapshot. Set PYTH_API_KEY for signed Hermes ticks.",
       };
     }
@@ -290,7 +283,6 @@ export class BoardComposer {
       confidenceUsd: null,
       publishTime: null,
       source: "unavailable",
-      live: false,
       note: "Feed exists but no public price tick landed.",
     };
   }
@@ -386,9 +378,6 @@ export class BoardComposer {
       return ((price - bestPrice) / bestPrice) * 10_000 <= 1;
     });
     const picked = winners.find((row) => row.quote.venue === "raydium") ?? winners[0];
-    if (!picked) {
-      return null;
-    }
     const liveQuotes = routes.flatMap((card) =>
       card.quotes.filter((quote) => quote.available && quote.effectiveUsdPerShare),
     );

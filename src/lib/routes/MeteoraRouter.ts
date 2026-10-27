@@ -30,8 +30,6 @@ export class MeteoraRouter {
             : quote.reason === "Jupiter quote unavailable"
               ? "Meteora has no route for this mint"
               : (quote.reason ?? "Meteora has no route for this mint"),
-        outAmountAtomic: null,
-        outShares: null,
         effectiveUsdPerShare: null,
         priceImpactPct: null,
         hopLabels: [],

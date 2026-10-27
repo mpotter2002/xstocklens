@@ -5,7 +5,6 @@ import type { PegSign } from "@/lib/types";
 export type PulseLeg = {
   symbol: string;
   priceUsd: number;
-  changePct24h: number | null;
 };
 
 export type PulseRow = {
@@ -128,7 +127,6 @@ export class MarketPulse {
     return {
       symbol: quote.symbol,
       priceUsd: quote.priceUsd,
-      changePct24h: quote.changePct24h !== null && Number.isFinite(quote.changePct24h) ? quote.changePct24h : null,
     };
   }
 }

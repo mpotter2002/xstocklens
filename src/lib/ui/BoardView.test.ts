@@ -177,7 +177,7 @@ describe("BoardView", () => {
   it("only adds a cash-close hint while the session is open, so after-hours copy is not repeated", () => {
     const base = BoardComposer.unavailable("AAPL").session;
     const closed = board({
-      session: { ...base, cashOpen: false, afterHoursNarrative: true, nextOpen: 1_800_000_000 },
+      session: { ...base, cashOpen: false, afterHoursNarrative: true },
     });
     expect(BoardView.nextSessionHint(closed)).toBeNull();
     const open = board({
@@ -212,13 +212,11 @@ function mark(partial: Partial<BoardMark> & Pick<BoardMark, "kind">): BoardMark 
     issuer: "test",
     symbol: "Equity.US.AAPL/USD",
     displaySymbol: "AAPL/USD",
-    description: "APPLE INC",
     feedId: null,
     priceUsd: 100,
     confidenceUsd: null,
     publishTime: null,
     source: "pyth-terminal",
-    live: false,
     note: null,
     ...partial,
   };
@@ -233,14 +231,7 @@ function quote(partial: Partial<SwapQuote>): SwapQuote {
     venue: "raydium",
     available: false,
     reason: null,
-    inMint: "usdc",
     outMint: "mint",
-    inAmountAtomic: "100000000",
-    outAmountAtomic: null,
-    inDecimals: 6,
-    outDecimals: 8,
-    inUsd: 100,
-    outShares: null,
     effectiveUsdPerShare: null,
     priceImpactPct: null,
     hopLabels: [],

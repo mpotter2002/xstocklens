@@ -5,8 +5,6 @@ export type DemoStep = {
 };
 
 export class DemoScript {
-  static readonly DEFAULT_TICKER = "AAPL";
-
   static steps(): DemoStep[] {
     return [
       {

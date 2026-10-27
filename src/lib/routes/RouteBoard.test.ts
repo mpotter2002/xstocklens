@@ -5,14 +5,7 @@ import type { SwapQuote } from "@/lib/types";
 function quote(partial: Partial<SwapQuote> & Pick<SwapQuote, "venue" | "available" | "effectiveUsdPerShare">): SwapQuote {
   return {
     reason: null,
-    inMint: "usdc",
     outMint: "mint",
-    inAmountAtomic: "100000000",
-    outAmountAtomic: "1",
-    inDecimals: 6,
-    outDecimals: 8,
-    inUsd: 100,
-    outShares: 0.3,
     priceImpactPct: 0.02,
     hopLabels: partial.venue === "raydium" ? ["Raydium"] : ["Raydium CLMM"],
     poolId: "pool",
